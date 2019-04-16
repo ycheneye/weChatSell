@@ -1,0 +1,21 @@
+server:
+  port: 8888
+  servlet:
+    context-path: /sell
+
+#Druid
+spring:
+  druid:
+    url: jdbc:mysql://192.168.1.164:3306/sell?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
+    driverClassName: com.mysql.jdbc.Driver
+    username: root
+    password: 123456
+    maxActive: 30 #最大链接数
+    maxWait: 10000 #获得链接的最大等待时间
+
+  jpa:
+    show-sql: true
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    default-property-inclusion: non_null
+
