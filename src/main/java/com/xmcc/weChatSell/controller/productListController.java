@@ -3,6 +3,7 @@ package com.xmcc.weChatSell.controller;
 import com.xmcc.weChatSell.common.ResultResponse;
 import com.xmcc.weChatSell.dto.ProductCategoryDto;
 import com.xmcc.weChatSell.service.ProductInfoService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("buyer/product")
-@ApiOperation("商品控制器")
+@Api("商品控制器")
 public class productListController {
 
     @Autowired

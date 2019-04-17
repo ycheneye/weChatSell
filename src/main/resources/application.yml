@@ -7,7 +7,7 @@ server:
 spring:
   druid:
     url: jdbc:mysql://192.168.1.164:3306/sell?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
-    driverClassName: com.mysql.jdbc.Driver
+    driverClassName: com.mysql.cj.jdbc.Driver
     username: root
     password: 123456
     maxActive: 30 #最大链接数
