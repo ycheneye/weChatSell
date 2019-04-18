@@ -2,18 +2,20 @@ package com.xmcc.weChatSell.controller;
 
 import com.google.common.collect.Maps;
 import com.xmcc.weChatSell.common.ResultResponse;
+import com.xmcc.weChatSell.dto.OrderMasterDetailDto;
 import com.xmcc.weChatSell.dto.OrderMasterDto;
+import com.xmcc.weChatSell.entity.OrderMaster;
 import com.xmcc.weChatSell.service.OrderMasterService;
 import com.xmcc.weChatSell.utlis.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.Arrays;
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -42,5 +44,31 @@ public class OrderController {
         }
         map = masterService.createOrderMaster(masterDto);
         return ResultResponse.success(map);
+    }
+
+
+    @GetMapping("/list")
+    public ResultResponse showOrderList(@RequestParam("page")Integer page, @RequestParam("size")Integer size,@RequestParam("openid") String openid){
+        PageRequest request = PageRequest.of(page, size);
+        log.info("分页信息："+request.toString());
+        List<OrderMaster> orderMasters =  masterService.findAll(request ,openid);
+        for (OrderMaster master:
+             orderMasters) {
+            log.info("订单详情："+master.toString());
+        }
+        return ResultResponse.success(orderMasters);
+    }
+
+    @GetMapping("/detail")
+    public ResultResponse showOrderDetail(@RequestParam("orderId")String orderId,@RequestParam("openid") String openid){
+
+        OrderMasterDetailDto masterDetailDto = masterService.getMasterDetail(orderId,openid);
+        return ResultResponse.success(masterDetailDto);
+    }
+
+    @PostMapping("/cancel")
+    public ResultResponse canselOrder(@RequestParam("orderId")String orderId,@RequestParam("openid") String openid){
+        masterService.updateOrderMaster(orderId,openid);
+        return ResultResponse.success();
     }
 }
